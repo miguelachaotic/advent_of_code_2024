@@ -13,7 +13,7 @@ def is_safe(line : list[int]) -> bool:
             else: dec = True
     return True
 
-def is_extra_safe(line : list[int]) -> bool:
+def safe_removing(line : list[int]) -> bool:
     for i in range(len(line)):
         new_list = [x for j, x in enumerate(line) if j != i]
         if(is_safe(new_list)):
@@ -31,7 +31,7 @@ def main():
             if is_safe(line):
                 safes = -~safes
                 safes_no_deleting = -~safes_no_deleting
-            elif is_extra_safe(line):
+            elif safe_removing(line):
                 safes = -~safes
     print("No deleting (part 1):", safes_no_deleting.__str__())
     print("Deleting one or zero (part 2):", safes.__str__())
