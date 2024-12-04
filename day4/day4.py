@@ -63,7 +63,7 @@ def check_xmas(s: list[str], position: tuple[int, int]) -> int:
     return total
 
 def main() -> None:
-    data: list[str] = open('input.txt').readlines()
+    data: list[str] = open('input.txt', 'r').readlines()
     total: int = 0
     for i in range(len(data)):
         for j in range(len(data[i])):
