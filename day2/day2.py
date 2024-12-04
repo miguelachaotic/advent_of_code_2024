@@ -24,7 +24,7 @@ def safe_removing(line : list[int]) -> bool:
 def main():
     safes = 0
     safes_no_deleting = 0
-    with open("input.txt", 'r') as input:
+    with open("day2/input.txt", 'r') as input:
         lines = input.readlines()
         for line in lines:
             line = [*map(int, line.split(' '))]

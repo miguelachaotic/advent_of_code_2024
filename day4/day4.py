@@ -32,11 +32,40 @@ def find_word_in_grid(grid, word):
                     count += 1
     return count
 
+def find_x_mas_pattern(grid):
+    rows, cols = len(grid), len(grid[0])
+    pattern_count = 0
 
+    # Define relative positions for all 8 orientations of the pattern
+    patterns = [
+        # Original orientation
+        [(-1, -1, 'M'), (-1, 1, 'S'), (1, -1, 'M'), (1, 1, 'S')],
+        # Rotated 90°
+        [(-1, -1, 'M'), (-1, 1, 'M'), (1, -1, 'S'), (1, 1, 'S')],
+        # Rotated 180°
+        [(-1, -1, 'S'), (-1, 1, 'M'), (1, -1, 'S'), (1, 1, 'M')],
+        # Rotated 270°
+        [(-1, -1, 'S'), (-1, 1, 'S'), (1, -1, 'M'), (1, 1, 'M')],
+    ]
 
+    for i in range(1, rows - 1):
+        for j in range(1, cols - 1):
+            if grid[i][j] == 'A':  
+                for pattern in patterns:
+                    if all(
+                        grid[i + dx][j + dy] == char for dx, dy, char in pattern
+                    ):
+                        pattern_count += 1
 
-if __name__ == '__main__':
-    grid = open("input.txt", 'r').readlines()
+    return pattern_count
+
+def main() -> None:
+    grid = open("day4/input.txt", 'r').readlines()
     word = "XMAS"
     occurrences = find_word_in_grid(grid, word)
-    print("Parte1:", occurrences)
+    x_mas_occurrences = find_x_mas_pattern(grid)
+    print("Parte 1:", occurrences)
+    print("Parte 2:", x_mas_occurrences)
+
+if __name__ == '__main__':
+    main()
