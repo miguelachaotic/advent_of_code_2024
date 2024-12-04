@@ -1,75 +1,42 @@
-
-
-def check_upper_left(s: list[str], start: tuple[int, int]) -> bool:
-    if start[0] < 3 or start[1] < 3: return False
-    return s[start[0] - 1][start[1] - 1] == 'M' and \
-        s[start[0] - 2][start[1] - 2] == 'A' and \
-        s[start[0] - 3][start[1] - 3] == 'S'
-
-def check_up(s: list[str], start: tuple[int, int]) -> bool:
-    if start[1] < 3: return False
-    return s[start[0]][start[1] - 1] == 'M' and \
-        s[start[0]][start[1] - 2] == 'A' and \
-        s[start[0]][start[1] - 3] == 'S'
-        
-def check_upper_right(s: list[str], start: tuple[int, int]) -> bool:
-    if start[0] >= len(s) - 3 or start[1] < 3: return False
-    return s[start[0] + 1][start[1] - 1] == 'M' and \
-        s[start[0] + 2][start[1] - 2] == 'A' and \
-        s[start[0] + 3][start[1] - 3] == 'S'
- 
-def check_right(s: list[str], start: tuple[int, int]) -> bool:
-    if start[0] >= len(s) - 3: return False
-    return s[start[0] + 1][start[1]] == 'M' and \
-        s[start[0] + 2][start[1]] == 'A' and \
-        s[start[0] + 3][start[1]] == 'S'
-        
-def check_bottom_right(s: list[str], start: tuple[int, int]) -> bool:
-    if start[0] >= len(s) - 3 or start[1] >= len(s[0]) - 3: return False
-    return s[start[0] + 1][start[1] + 1] == 'M' and \
-        s[start[0] + 2][start[1] + 2] == 'A' and \
-        s[start[0] + 3][start[0] + 3] == 'S'
-
-def check_down(s: list[str], start: tuple[int, int]) -> bool:
-    if start[1] >= len(s[0]) - 3: return False
-    return s[start[0]][start[1] + 1] == 'M' and \
-        s[start[0]][start[1] + 2] == 'M' and \
-        s[start[0]][start[1] + 3] == 'S'
-        
-def check_bottom_left(s: list[str], start: tuple[int, int]) -> bool:
-    if start[0] < 3 or start[1] >= len(s[0]) - 3: return False
-    return s[start[0] - 1][start[1] + 1] and \
-        s[start[0] - 2][start[1] + 2] and \
-        s[start[0] - 3][start[1] + 3]
-        
-def check_left(s: list[str], start: tuple[int, int]) -> bool:
-    if start[0] < 3: return False
-    return s[start[0] - 1][start[1]] == 'M' and \
-        s[start[0] - 2][start[1]] == 'A' and \
-        s[start[0] - 3][start[1]] == 'S'
-
-
-def check_xmas(s: list[str], position: tuple[int, int]) -> int:
-    if s[position[0]][position[1]] != 'X': return 0
-    total: int = 0
-    if check_upper_left(s, position): total += 1
-    if check_up(s, position): total += 1
-    if check_upper_right(s, position): total += 1
-    if check_right(s, position): total += 1
-    if check_bottom_right(s, position): total += 1
-    if check_down(s, position): total += 1
-    if check_bottom_left(s, position): total += 1
-    if check_left(s, position): total += 1
-    return total
-
-def main() -> None:
-    data: list[str] = open('input.txt', 'r').readlines()
-    total: int = 0
-    for i in range(len(data)):
-        for j in range(len(data[i])):
-            total += check_xmas(data, (i, j))
-    print("Parte 1:", total)
-            
+def find_word_in_grid(grid, word):
     
-if __name__ == '__name__':
-    main()
+    rows, cols = len(grid), len(grid[0])
+    word_len = len(word)
+    directions = [
+        (0, 1),   # Horizontal right
+        (0, -1),  # Horizontal left
+        (1, 0),   # Vertical down
+        (-1, 0),  # Vertical up
+        (1, 1),   # Diagonal down-right
+        (1, -1),  # Diagonal down-left
+        (-1, 1),  # Diagonal up-right
+        (-1, -1)  # Diagonal up-left
+    ]
+
+    def is_valid(x, y):
+        return 0 <= x < rows and 0 <= y < cols
+
+    def search_from(x, y, dx, dy):
+        
+        for k in range(word_len):
+            nx, ny = x + k * dx, y + k * dy
+            if not is_valid(nx, ny) or grid[nx][ny] != word[k]:
+                return False
+        return True
+
+    count = 0
+    for i in range(rows):
+        for j in range(cols):
+            for dx, dy in directions:
+                if search_from(i, j, dx, dy):
+                    count += 1
+    return count
+
+
+
+
+if __name__ == '__main__':
+    grid = open("input.txt", 'r').readlines()
+    word = "XMAS"
+    occurrences = find_word_in_grid(grid, word)
+    print("Parte1:", occurrences)
