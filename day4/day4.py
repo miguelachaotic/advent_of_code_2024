@@ -1,4 +1,4 @@
-def find_word_in_grid(grid, word):
+def find_word_in_grid(grid: list[str], word: str):
     
     rows, cols = len(grid), len(grid[0])
     word_len = len(word)
@@ -13,10 +13,10 @@ def find_word_in_grid(grid, word):
         (-1, -1)  # Diagonal up-left
     ]
 
-    def is_valid(x, y):
+    def is_valid(x: int, y: int):
         return 0 <= x < rows and 0 <= y < cols
 
-    def search_from(x, y, dx, dy):
+    def search_from(x: int, y: int, dx: int, dy: int):
         
         for k in range(word_len):
             nx, ny = x + k * dx, y + k * dy
@@ -32,7 +32,7 @@ def find_word_in_grid(grid, word):
                     count += 1
     return count
 
-def find_x_mas_pattern(grid):
+def find_x_mas_pattern(grid: list[str]):
     rows, cols = len(grid), len(grid[0])
     pattern_count = 0
 
@@ -60,8 +60,8 @@ def find_x_mas_pattern(grid):
     return pattern_count
 
 def main() -> None:
-    grid = open("day4/input.txt", 'r').readlines()
-    word = "XMAS"
+    grid: list[str] = open("day4/input.txt", 'r').readlines()
+    word: str = "XMAS"
     occurrences = find_word_in_grid(grid, word)
     x_mas_occurrences = find_x_mas_pattern(grid)
     print("Parte 1:", occurrences)
