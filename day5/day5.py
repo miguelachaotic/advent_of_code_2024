@@ -10,15 +10,13 @@ def process_rules(data: list[str]) -> dict[int, list[int]]:
     return graph
 
 def order_pages(update: list[int], graph: dict[int, list[int]]) -> list[int]:
-    # Crear subgrafo para la actualización
     subgraph = {page: set() for page in update}
     for page in update:
         if page in graph:
             for neighbor in graph[page]:
                 if neighbor in subgraph:
                     subgraph[page].add(neighbor)
-    
-    # Realizar un orden topológico
+
     in_degree = {page: 0 for page in subgraph}
     for page, neighbors in subgraph.items():
         for neighbor in neighbors:
@@ -41,11 +39,9 @@ def is_valid_order(update: list[int], graph: dict[int, list[int]]) -> bool:
     return order_pages(update, graph) == update
 
 def main():
-    # Leer archivo de entrada
     with open('day5/input.txt', 'r') as f:
         data = f.readlines()
     
-    # Procesar reglas y actualizaciones
     split_index = data.index('\n')
     rules_data = data[:split_index]
     updates_data = data[split_index + 1:]
@@ -57,7 +53,6 @@ def main():
     for update_line in updates_data:
         update = list(map(int, update_line.strip().split(',')))
         if not is_valid_order(update, graph):
-            # Ordenar correctamente la actualización
             correct_order = order_pages(update, graph)
             middle = correct_order[len(correct_order) // 2]
             sum2 += middle
