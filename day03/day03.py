@@ -18,7 +18,7 @@ def parse_mul(s: str, begin: int) -> int | None:
     return num1 * num2
 
 def main() -> None:
-    data: str = open('day3/input.txt', 'r').read()
+    data: str = open('day03/input.txt', 'r').read()
     sum1: int = 0
     sum2: int = 0
     do: str = "do()"

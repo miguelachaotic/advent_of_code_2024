@@ -39,7 +39,7 @@ def is_valid_order(update: list[int], graph: dict[int, list[int]]) -> bool:
     return order_pages(update, graph) == update
 
 def main():
-    with open('day5/input.txt', 'r') as f:
+    with open('day05/input.txt', 'r') as f:
         data = f.readlines()
     
     split_index = data.index('\n')

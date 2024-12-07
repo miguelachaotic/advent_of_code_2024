@@ -1,4 +1,4 @@
-import json
+from json import dumps, loads
 
 def get_guard_pos(_map):
     rows, cols = len(_map), len(_map[0])
@@ -48,15 +48,15 @@ def path(data):
     return len(visited)
 
 def loops(data):
-    is_leaving, visited, visited_entry = patrol(data)
+    _, visited, visited_entry = patrol(data)
     if visited == None or visited_entry == None: return None
     visited.remove(get_guard_pos(data))
     loop_count: int = 0
     
-    _map_dump = json.dumps(data) # Para evitar hacer deepcopies
+    _map_dump = dumps(data) # Para evitar hacer deepcopies
     
     for vi, vj in visited:
-        _map_copy = json.loads(_map_dump)
+        _map_copy = loads(_map_dump)
         _map_copy[vi][vj] = '#'
         
         pos = visited_entry[(vi, vj)][0]
@@ -69,13 +69,10 @@ def loops(data):
             
     return loop_count
     
-    
-    
-
 def main() -> None:
     data: list[list[str]] = []
     
-    with open('day6/input.txt', 'r') as f:
+    with open('day06/input.txt', 'r') as f:
         data = [list(line) for line in f]
     
     print("Parte 1:", path(data))

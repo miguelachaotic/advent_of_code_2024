@@ -60,7 +60,7 @@ def find_x_mas_pattern(grid: list[str]):
     return pattern_count
 
 def main() -> None:
-    grid: list[str] = open("day4/input.txt", 'r').readlines()
+    grid: list[str] = open("day04/input.txt", 'r').readlines()
     word: str = "XMAS"
     occurrences = find_word_in_grid(grid, word)
     x_mas_occurrences = find_x_mas_pattern(grid)
