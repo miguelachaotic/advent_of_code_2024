@@ -36,14 +36,14 @@ def compact_files(inp: str) -> int:
     data: list = []
     free: list = []
     for i in inp:
-        if (d%2) == 0:
+        if d % 2 == 0:
             data.append([idx, int(i)])
         else:
-            free.append([idx,int(i)])
-        d+=1
-        idx+=int(i)
+            free.append([idx, int(i)])
+        d += 1
+        idx += int(i)
     
-    for i in range(len(data)-1, -1, -1):
+    for i in range(len(data) - 1, -1, -1):
         for j in range(len(free)):
             if free[j][0] > data[i][0]:
                 break
